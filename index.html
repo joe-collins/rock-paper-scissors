@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Rock, Paper, Scissors</title>
+</head>
+<body>
+  <script>
+    function computerPlay() {
+      let choice = Math.random()*3;
+      if (choice < 1) {
+        return "Rock";
+      } else if (choice < 2) {
+        return "Paper";
+      } else {
+        return "Scissors";
+      }
+    }
+
+    // capitalize the first letter of a string
+    function properCase(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    function playRound(playerSelection, computerSelection) {
+      // Do case-insensitive comparisons, but use the original inputs for feedback
+      let pCompare = playerSelection.toLowerCase();
+      let cCompare = computerSelection.toLowerCase();
+
+      if (pCompare === cCompare) {
+        return "Tied round! Both players chose " + properCase(playerSelection);
+      } else if ((pCompare==="rock" && cCompare==="scissors") ||
+                 (pCompare==="scissors" && cCompare==="paper") ||
+                 (pCompare==="paper" && cCompare==="rock")) {
+        return `Player wins! ${properCase(playerSelection)} beats ${properCase(computerSelection)}`;
+      } else {
+        return `Computer wins! ${properCase(computerSelection)} beats ${properCase(playerSelection)}`;
+      }
+    }
+
+    function isValidThrow(playerThrow) {
+      playerThrow = playerThrow.toLowerCase();
+      if (playerThrow === "rock" || playerThrow === "paper" || playerThrow === "scissors") {
+        return true;
+      }
+    }
+
+    // Recursively ask the player for a valid RPS throw
+    function playerPlay() {
+      let playerInput = prompt("Throw rock, paper, or scissors!");
+      if (isValidThrow(playerInput)) {
+        return playerInput;
+      } else {
+        alert("That's not a fair throw!");
+        return playerPlay();
+      }
+    }
+
+    function game() {
+      for(let i=1;i<=5;i++) {
+        console.log(playRound(playerPlay(), computerPlay()));
+      }
+    }
+  </script>
+</body>
+</html>
